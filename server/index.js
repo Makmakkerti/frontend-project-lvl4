@@ -35,11 +35,13 @@ const setUpStaticAssets = (app) => {
 };
 
 export default (options = {}) => {
+  // @ts-ignore
   const app = fastify({ logger: true, prettyPrint: true });
 
   setUpViews(app);
   setUpStaticAssets(app);
 
+  // @ts-ignore
   const io = socket(app.server);
 
   addRoutes(app, io, options.state || {});
