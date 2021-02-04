@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { selectChannel } from '../store/currentChannel';
+import { openModal } from '../store/modal';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -21,11 +22,16 @@ const Channels = (props) => {
     dispatch(selectChannel({ currentChannelId: id }));
   };
 
+  const handleAddChannel = (e) => {
+    e.preventDefault();
+    dispatch(openModal());
+  };
+
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>Channels</span>
-        <button type="button" className="ml-auto p-0 btn btn-link">+</button>
+        <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleAddChannel}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">
         {channels.map((c) => {
