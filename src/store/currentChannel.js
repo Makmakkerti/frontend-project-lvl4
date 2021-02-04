@@ -5,10 +5,7 @@ const slice = createSlice({
   name: 'currentChannel',
   initialState: gon.currentChannelId,
   reducers: {
-    selectChannel: (currentChannelId, action) => {
-      // eslint-disable-next-line no-param-reassign
-      currentChannelId = action.payload.currentChannelId;
-    },
+    selectChannel: (currentChannelId, action) => action.payload.currentChannelId,
   },
 });
 

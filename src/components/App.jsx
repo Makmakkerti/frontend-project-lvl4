@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 
 const App = (props) => (
   <div className="row h-100 pb-3">
-    <Channels data={props} />
+    <Channels />
     <Messages data={props} username={username} />
   </div>
 );

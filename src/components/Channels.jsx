@@ -1,13 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { connect } from 'react-redux';
 import cn from 'classnames';
+import { selectChannel } from '../store/currentChannel';
 
-const Channels = ({ data }) => {
-  const { channels, currentChannelId } = data;
+const mapStateToProps = (state) => {
+  const props = {
+    currentChannelId: state.currentChannelId,
+    channels: state.channels,
+  };
+  return props;
+};
+
+const Channels = (props) => {
+  const { channels, currentChannelId, dispatch } = props;
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();
     console.log(id);
+    dispatch(selectChannel({ currentChannelId: id }));
   };
 
   return (
@@ -41,4 +52,4 @@ const Channels = ({ data }) => {
   );
 };
 
-export default Channels;
+export default connect(mapStateToProps)(Channels);
