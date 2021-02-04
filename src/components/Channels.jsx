@@ -3,7 +3,7 @@ import React from 'react';
 import cn from 'classnames';
 
 const Channels = ({ data }) => {
-  const { channels, currentChannelId } = data.getState();
+  const { channels, currentChannelId } = data;
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();

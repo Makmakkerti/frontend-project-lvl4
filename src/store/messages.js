@@ -1,19 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import gon from 'gon';
-import _ from 'lodash';
+import { createSelector } from 'reselect';
 
 const slice = createSlice({
   name: 'messages',
-  initialState: [...gon.messages],
+  initialState: [],
   reducers: {
     messageAdded: (messages, action) => {
       messages.push({
-        id: _.uniqueId(),
-        text: action.payload.text,
+        ...action.payload.attributes,
       });
+      return messages;
     },
   },
 });
+
+export const getMessages = createSelector(
+  (state) => state.messages,
+  (messages) => messages,
+);
 
 export const { messageAdded } = slice.actions;
 export default slice.reducer;
