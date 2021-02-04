@@ -9,6 +9,8 @@ import { configureStore } from '@reduxjs/toolkit';
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import socket from 'io';
+// @ts-ignore
+import gon from 'gon';
 import App from './components/App';
 import reducer from './store/rootReducer';
 import { messageAdded } from './store/messages';
@@ -16,6 +18,8 @@ import { messageAdded } from './store/messages';
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
+
+console.log(gon);
 
 const store = configureStore({ reducer });
 

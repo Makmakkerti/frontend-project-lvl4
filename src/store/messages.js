@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
+import gon from 'gon';
 
 const slice = createSlice({
   name: 'messages',
-  initialState: [],
+  initialState: [...gon.messages],
   reducers: {
     messageAdded: (messages, action) => {
       messages.push({
