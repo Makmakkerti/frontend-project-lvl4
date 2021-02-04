@@ -3,7 +3,12 @@ import React from 'react';
 import cn from 'classnames';
 
 const Channels = ({ data }) => {
-  const { channels, currentChannelId } = data;
+  const { channels, currentChannelId } = data.getState();
+
+  const handleSwitchChannel = (id) => (e) => {
+    e.preventDefault();
+    console.log(id);
+  };
 
   return (
     <div className="col-3 border-right">
@@ -27,7 +32,7 @@ const Channels = ({ data }) => {
 
           return (
             <li className="nav-item" key={c.id}>
-              <button type="button" className={classes}>{c.name}</button>
+              <button type="button" className={classes} onClick={handleSwitchChannel(c.id)}>{c.name}</button>
             </li>
           );
         })}

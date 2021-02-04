@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import axios from 'axios';
+import { messageAdded } from '../store/messages';
 
 const Messages = ({ username, data }) => {
-  const { currentChannelId, messages } = data;
+  const { currentChannelId, messages } = data.getState();
   const channelMessages = messages.filter((m) => m.channelId === currentChannelId);
 
   const handleAddMessage = (e) => {
@@ -25,7 +26,8 @@ const Messages = ({ username, data }) => {
     axios.post(currentChannelMessagesUrl, messageData)
       .then((response) => {
         input.value = '';
-        console.log(response, data);
+        const text = response.data.data.attributes.body;
+        messageAdded(messages, { text });
       })
       .catch((error) => {
         console.log(error);
