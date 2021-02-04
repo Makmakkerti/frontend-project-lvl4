@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
 import cn from 'classnames';
 import { selectChannel } from '../store/currentChannel';
 import { openModal } from '../store/modal';
@@ -46,6 +47,20 @@ const Channels = (props) => {
               [`btn-${buttonStatus}`]: true,
             },
           );
+
+          if (c.removable) {
+            return (
+              <li className="nav-item">
+                <div role="group" className="d-flex mb-2 dropdown btn-group">
+                  <button type="button" className="text-left flex-grow-1 nav-link btn btn-light">{c.name}</button>
+                  <DropdownButton as={ButtonGroup} title="Dropdown" id="bg-nested-dropdown">
+                    <Dropdown.Item eventKey={c.id}>Rename</Dropdown.Item>
+                    <Dropdown.Item eventKey={c.id}>Remove</Dropdown.Item>
+                  </DropdownButton>
+                </div>
+              </li>
+            );
+          }
 
           return (
             <li className="nav-item" key={c.id}>
