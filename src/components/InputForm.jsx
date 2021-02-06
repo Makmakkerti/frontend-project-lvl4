@@ -1,42 +1,45 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { useFormik } from 'formik';
 
 const mapStateToProps = (state) => ({
   currentChannelId: state.currentChannelId,
 });
 
-const InputForm = ({ currentChannelId, username }) => {
-  const handleAddMessage = (e) => {
-    e.preventDefault();
-    const input = e.target.elements.body;
-    const message = input.value;
-
-    const currentChannelMessagesUrl = `/api/v1/channels/${currentChannelId}/messages`;
-    const messageData = {
-      data: {
-        attributes: {
-          body: message,
-          channelId: currentChannelId,
-          nickname: username,
-        },
+const handleAddMessage = (props, body) => {
+  const currentChannelMessagesUrl = `/api/v1/channels/${props.currentChannelId}/messages`;
+  const messageData = {
+    data: {
+      attributes: {
+        body,
+        channelId: props.currentChannelId,
+        nickname: props.username,
       },
-    };
-
-    axios.post(currentChannelMessagesUrl, messageData)
-      .then(() => {
-        input.value = '';
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    },
   };
 
+  axios.post(currentChannelMessagesUrl, messageData)
+    .then()
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const InputForm = (props) => {
+  const formik = useFormik({
+    initialValues: { body: '' },
+    onSubmit: (values, { resetForm }) => {
+      handleAddMessage(props, values.body);
+      resetForm({ values: '' });
+    },
+  });
+
   return (
-    <form noValidate className="" onSubmit={handleAddMessage}>
+    <form noValidate className="" onSubmit={formik.handleSubmit}>
       <div className="form-group">
         <div className="input-group">
-          <input name="body" aria-label="body" className="mr-2 form-control" />
+          <input name="body" aria-label="body" className="mr-2 form-control" value={formik.values.body} onChange={formik.handleChange} />
           <button
             aria-label="submit"
             type="submit"

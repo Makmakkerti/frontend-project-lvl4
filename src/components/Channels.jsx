@@ -25,7 +25,7 @@ const Channels = (props) => {
 
   const handleAddChannel = (e) => {
     e.preventDefault();
-    dispatch(openModal());
+    dispatch(openModal({ modalType: 'Add' }));
   };
 
   return (

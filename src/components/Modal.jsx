@@ -7,7 +7,7 @@ import { closeModal } from '../store/modal';
 
 const mapStateToProps = (state) => {
   const props = {
-    showModal: state.showModal,
+    modalState: state.modalState,
   };
   return props;
 };
@@ -17,14 +17,14 @@ const handleClose = (dispatch) => () => {
   dispatch(closeModal());
 };
 
-const handleSubmit = (dispatch) => () => {
-  console.log('Submitted!!!');
+const handleSubmit = (dispatch, state) => () => {
+  console.log('Submitted!!!', state);
   dispatch(closeModal());
 };
 
-const MyModal = ({ showModal, dispatch }) => (
+const MyModal = ({ modalState, dispatch }) => (
   <>
-    <Modal show={showModal} onHide={handleClose(dispatch)}>
+    <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
       <Modal.Header closeButton>
         <Modal.Title>Add channel</Modal.Title>
       </Modal.Header>
@@ -36,7 +36,7 @@ const MyModal = ({ showModal, dispatch }) => (
           <Button variant="secondary" className="mr-2" onClick={handleClose(dispatch)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmit(dispatch)}>
+          <Button variant="primary" onClick={handleSubmit(dispatch, modalState)}>
             Submit
           </Button>
         </div>
