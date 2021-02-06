@@ -19,7 +19,6 @@ const Channels = (props) => {
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();
-    console.log(id);
     dispatch(selectChannel({ currentChannelId: id }));
   };
 
@@ -50,10 +49,10 @@ const Channels = (props) => {
 
           if (c.removable) {
             return (
-              <li className="nav-item">
+              <li className="nav-item" key={c.id}>
                 <div role="group" className="d-flex mb-2 dropdown btn-group">
-                  <button type="button" className="text-left flex-grow-1 nav-link btn btn-light">{c.name}</button>
-                  <DropdownButton as={ButtonGroup} title="Dropdown" id="bg-nested-dropdown">
+                  <button type="button" className="text-left flex-grow-1 nav-link btn btn-light" onClick={handleSwitchChannel(c.id)}>{c.name}</button>
+                  <DropdownButton as={ButtonGroup} title="" id="bg-nested-dropdown">
                     <Dropdown.Item eventKey={c.id}>Rename</Dropdown.Item>
                     <Dropdown.Item eventKey={c.id}>Remove</Dropdown.Item>
                   </DropdownButton>

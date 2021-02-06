@@ -14,6 +14,7 @@ import socket from 'io';
 import App from './components/App';
 import reducer from './store/rootReducer';
 import { messageAdded } from './store/messages';
+import { channelAdded } from './store/channels';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -23,6 +24,10 @@ const store = configureStore({ reducer });
 
 socket.on('newMessage', (msg) => {
   store.dispatch(messageAdded({ attributes: msg.data.attributes }));
+});
+
+socket.on('newChannel', (msg) => {
+  store.dispatch(channelAdded({ attributes: msg.data.attributes }));
 });
 
 const jsx = (
