@@ -1,9 +1,13 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-const Messages = ({ username, data }) => {
-  const { currentChannelId, messages } = data;
+const mapStateToProps = (state) => ({
+  currentChannelId: state.currentChannelId,
+  messages: state.messages,
+});
+
+const Messages = ({ username, currentChannelId, messages }) => {
   const channelMessages = messages.filter((m) => m.channelId === currentChannelId);
 
   const handleAddMessage = (e) => {
@@ -38,7 +42,9 @@ const Messages = ({ username, data }) => {
           {channelMessages.map((m) => (
             <div className="text-break" key={m.id}>
               <b>{m.nickname}</b>
-              : {m.body}
+              :
+              {' '}
+              {m.body}
             </div>
           ))}
         </div>
@@ -64,4 +70,4 @@ const Messages = ({ username, data }) => {
   );
 };
 
-export default Messages;
+export default connect(mapStateToProps)(Messages);

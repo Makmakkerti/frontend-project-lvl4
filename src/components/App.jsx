@@ -25,10 +25,10 @@ const mapStateToProps = (state) => {
   return props;
 };
 
-const App = (props) => (
+const App = () => (
   <div className="row h-100 pb-3">
     <Channels />
-    <Messages data={props} username={username} />
+    <Messages username={username} />
     <Modal />
   </div>
 );
