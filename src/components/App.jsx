@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import faker from 'faker';
 import Channels from './Channels';
 import Messages from './Messages';
-import Modal from './Modal';
+import getModal from './Modals/index';
 
 if (!Cookies.get('username')) {
   const fakeName = faker.fake('{{name.firstName}}_{{name.lastName}}');
@@ -20,16 +20,18 @@ const mapStateToProps = (state) => {
     messages: state.messages,
     channels: state.channels,
     currentChannelId: state.currentChannelId,
-    showModal: state.modal,
+    modalState: state.modal,
   };
   return props;
 };
+
+const ModalComponent = getModal('adding');
 
 const App = () => (
   <div className="row h-100 pb-3">
     <Channels />
     <Messages username={username} />
-    <Modal />
+    <ModalComponent />
   </div>
 );
 
