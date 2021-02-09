@@ -13,7 +13,7 @@ import socket from 'io';
 // import gon from 'gon';
 import App from './components/App';
 import reducer from './store/rootReducer';
-import { messageAdded } from './store/messages';
+import { messageAdded, messagesRemoved } from './store/messages';
 import { channelAdded, channelRemoved } from './store/channels';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -24,6 +24,7 @@ const store = configureStore({ reducer });
 
 socket.on('newMessage', (msg) => {
   store.dispatch(messageAdded({ attributes: msg.data.attributes }));
+  console.log(store.getState());
 });
 
 socket.on('newChannel', (msg) => {
@@ -32,6 +33,8 @@ socket.on('newChannel', (msg) => {
 
 socket.on('removeChannel', (msg) => {
   store.dispatch(channelRemoved({ id: msg.data.id }));
+  store.dispatch(messagesRemoved({ id: msg.data.id }));
+  console.log(store.getState());
 });
 
 const jsx = (

@@ -20,10 +20,9 @@ const Remove = (props) => {
   } = props;
 
   const handleRemove = () => {
-    console.log(currentChannelId);
     axios.delete(`/api/v1/channels/${currentChannelId}`)
       .then((resp) => {
-        const { data } = resp.data;
+        const { data } = resp;
         console.log(data);
       })
       .catch((error) => {

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createSelector } from 'reselect';
 import gon from 'gon';
 
 const slice = createSlice({
@@ -12,13 +11,9 @@ const slice = createSlice({
       });
       return messages;
     },
+    messagesRemoved: (messages, { payload }) => messages.filter((m) => m.channelId !== payload.id),
   },
 });
 
-export const getMessages = createSelector(
-  (state) => state.messages,
-  (messages) => messages,
-);
-
-export const { messageAdded } = slice.actions;
+export const { messageAdded, messagesRemoved } = slice.actions;
 export default slice.reducer;
