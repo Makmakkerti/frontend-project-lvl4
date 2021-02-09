@@ -11,8 +11,10 @@ const slice = createSlice({
       });
     },
     channelRemoved: (channels, action) => channels.filter((c) => c.id !== action.payload.id),
+    channelRenamed: (channels, { payload: { attributes } }) => channels
+      .map((c) => (c.id !== attributes.id ? c : { ...c, name: attributes.name })),
   },
 });
 
-export const { channelAdded, channelRemoved } = slice.actions;
+export const { channelAdded, channelRenamed, channelRemoved } = slice.actions;
 export default slice.reducer;

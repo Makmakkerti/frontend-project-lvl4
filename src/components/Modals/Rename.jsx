@@ -36,7 +36,7 @@ const Rename = (props) => {
         },
       };
 
-      axios.post('/api/v1/channels', messageData)
+      axios.patch(`/api/v1/channels/${currentChannelId}`, messageData)
         .then(({ data }) => {
           const { attributes } = data.data;
           console.log(attributes);
