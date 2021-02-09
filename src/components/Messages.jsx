@@ -7,7 +7,7 @@ const mapStateToProps = (state) => ({
   messages: state.messages,
 });
 
-const Messages = ({ username, currentChannelId, messages }) => {
+const Messages = ({ currentChannelId, messages }) => {
   const channelMessages = messages.filter((m) => m.channelId === currentChannelId);
 
   return (
@@ -24,7 +24,7 @@ const Messages = ({ username, currentChannelId, messages }) => {
           ))}
         </div>
         <div className="mt-auto">
-          <InputForm username={username} />
+          <InputForm />
         </div>
       </div>
     </div>

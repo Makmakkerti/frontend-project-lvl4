@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
+import UserNameContext from '../app-context';
 
 const mapStateToProps = (state) => ({
   currentChannelId: state.currentChannelId,
 });
 
-const handleAddMessage = (props, body) => {
-  const currentChannelMessagesUrl = `/api/v1/channels/${props.currentChannelId}/messages`;
+const handleAddMessage = (props, body, nickname) => {
   const messageData = {
     data: {
       attributes: {
         body,
         channelId: props.currentChannelId,
-        nickname: props.username,
+        nickname,
       },
     },
   };
 
-  axios.post(currentChannelMessagesUrl, messageData)
+  axios.post(`/api/v1/channels/${props.currentChannelId}/messages`, messageData)
     .then()
     .catch((error) => {
       console.log(error);
@@ -27,10 +27,12 @@ const handleAddMessage = (props, body) => {
 };
 
 const InputForm = (props) => {
+  const nickname = useContext(UserNameContext);
+
   const formik = useFormik({
     initialValues: { body: '' },
     onSubmit: (values, { resetForm }) => {
-      handleAddMessage(props, values.body);
+      handleAddMessage(props, values.body, nickname);
       resetForm({ values: '' });
     },
   });

@@ -7,6 +7,7 @@ import faker from 'faker';
 import Channels from './Channels';
 import Messages from './Messages';
 import getModal from './Modals/index';
+import UserNameContext from '../app-context';
 
 if (!Cookies.get('username')) {
   const fakeName = faker.fake('{{name.firstName}}_{{name.lastName}}');
@@ -25,7 +26,9 @@ const App = ({ modalState }) => {
   return (
     <div className="row h-100 pb-3">
       <Channels />
-      <Messages username={username} />
+      <UserNameContext.Provider value={username}>
+        <Messages />
+      </UserNameContext.Provider>
       { modalState.type && <ModalComponent />}
     </div>
   );
