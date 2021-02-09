@@ -14,7 +14,7 @@ import socket from 'io';
 import App from './components/App';
 import reducer from './store/rootReducer';
 import { messageAdded } from './store/messages';
-import { channelAdded } from './store/channels';
+import { channelAdded, channelRemoved } from './store/channels';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -28,6 +28,10 @@ socket.on('newMessage', (msg) => {
 
 socket.on('newChannel', (msg) => {
   store.dispatch(channelAdded({ attributes: msg.data.attributes }));
+});
+
+socket.on('removeChannel', (msg) => {
+  store.dispatch(channelRemoved({ id: msg.data.id }));
 });
 
 const jsx = (

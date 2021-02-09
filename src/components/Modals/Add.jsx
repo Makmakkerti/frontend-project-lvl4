@@ -7,18 +7,15 @@ import {
 } from 'react-bootstrap';
 import { closeModal } from '../../store/modal';
 
-const mapStateToProps = (state) => {
-  const props = {
-    modalState: state.modalState,
-  };
-  return props;
-};
+const mapStateToProps = (state) => ({
+  modalState: state.modalState,
+});
 
 const handleClose = (dispatch) => () => {
   dispatch(closeModal());
 };
 
-const MyModal = (props) => {
+const Add = (props) => {
   const { modalState, dispatch } = props;
 
   const formik = useFormik({
@@ -40,7 +37,6 @@ const MyModal = (props) => {
         .catch((error) => {
           console.log(error);
         });
-
       dispatch(closeModal());
     },
   });
@@ -78,4 +74,4 @@ const MyModal = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(MyModal);
+export default connect(mapStateToProps)(Add);

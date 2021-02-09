@@ -15,24 +15,20 @@ if (!Cookies.get('username')) {
 
 const username = Cookies.get('username');
 
-const mapStateToProps = (state) => {
-  const props = {
-    messages: state.messages,
-    channels: state.channels,
-    currentChannelId: state.currentChannelId,
-    modalState: state.modal,
-  };
-  return props;
+const mapStateToProps = (state) => ({
+  modalState: state.modalState,
+});
+
+const App = ({ modalState }) => {
+  const ModalComponent = getModal(modalState.type);
+
+  return (
+    <div className="row h-100 pb-3">
+      <Channels />
+      <Messages username={username} />
+      { modalState.type && <ModalComponent />}
+    </div>
+  );
 };
-
-const ModalComponent = getModal('adding');
-
-const App = () => (
-  <div className="row h-100 pb-3">
-    <Channels />
-    <Messages username={username} />
-    <ModalComponent />
-  </div>
-);
 
 export default connect(mapStateToProps)(App);

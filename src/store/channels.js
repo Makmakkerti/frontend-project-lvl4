@@ -10,8 +10,9 @@ const slice = createSlice({
         ...action.payload.attributes,
       });
     },
+    channelRemoved: (channels, action) => channels.filter((c) => c.id !== action.payload.id),
   },
 });
 
-export const { channelAdded } = slice.actions;
+export const { channelAdded, channelRemoved } = slice.actions;
 export default slice.reducer;
