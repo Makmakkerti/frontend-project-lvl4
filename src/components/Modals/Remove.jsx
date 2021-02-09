@@ -7,7 +7,6 @@ import { closeModal } from '../../store/modal';
 const mapStateToProps = (state) => ({
   modalState: state.modalState,
   currentChannelId: state.currentChannelId,
-  channels: state.channels,
 });
 
 const handleClose = (dispatch) => () => {
@@ -16,7 +15,7 @@ const handleClose = (dispatch) => () => {
 
 const Remove = (props) => {
   const {
-    modalState, channels, currentChannelId, dispatch,
+    modalState, currentChannelId, dispatch,
   } = props;
 
   const handleRemove = () => {
@@ -30,9 +29,6 @@ const Remove = (props) => {
       });
     dispatch(closeModal());
   };
-
-  const currentChannel = channels.find((channel) => currentChannelId === channel.id);
-  console.log(currentChannelId, channels, currentChannel);
 
   return (
     <>

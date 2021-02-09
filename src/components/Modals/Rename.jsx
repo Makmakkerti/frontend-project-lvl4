@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -21,9 +21,21 @@ const Rename = (props) => {
   const {
     modalState, channels, currentChannelId, dispatch,
   } = props;
-
   const currentChannel = channels.find((channel) => currentChannelId === channel.id);
-  console.log(currentChannelId, channels, currentChannel);
+  const modalInputRef = React.createRef();
+
+  // AutoFocus Modal Input
+  useEffect(() => {
+    modalInputRef.current.focus();
+  });
+
+  // AutoSelect Modal Input
+  useEffect(
+    () => {
+      modalInputRef.current.select();
+    },
+    [currentChannel.name],
+  );
 
   const formik = useFormik({
     initialValues: { body: currentChannel.name },
@@ -63,6 +75,7 @@ const Rename = (props) => {
                 className="mb-2 form-control"
                 value={formik.values.body}
                 onChange={formik.handleChange}
+                ref={modalInputRef}
               />
 
               <div className="d-flex justify-content-end">
