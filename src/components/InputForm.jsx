@@ -32,6 +32,9 @@ const InputForm = (props) => {
   const formik = useFormik({
     initialValues: { body: '' },
     onSubmit: (values, { resetForm }) => {
+      // Prevent sending empty message
+      if (!values.body.length) return;
+
       handleAddMessage(props, values.body, nickname);
       resetForm({ values: '' });
     },
