@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "0.0.1",
-  "description": "",
+  "description": "SocketIO based, real time Chat Application",
   "main": "server/index.js",
   "engines": {
     "node": ">= 14"
@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git@github.com:hexlet-components/projects-frontend-l4-server.git"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Konstantin Mokienko",
   "license": "ISC",
   "homepage": "",
   "dependencies": {
@@ -85,7 +85,6 @@
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "webpack": "^5.9.0",
-    "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   }
 }
