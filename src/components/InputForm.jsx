@@ -43,8 +43,9 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
     initialValues: { body: '' },
     onSubmit: (values, { resetForm }) => {
       // Prevent sending empty message
-      if (!values.body.length) return;
-      handleAddMessage(values.body, resetForm);
+      const message = values.body.trim();
+      if (!message.length) return;
+      handleAddMessage(message, resetForm);
     },
   });
 
@@ -52,7 +53,7 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
     'mr-2',
     'form-control',
     {
-      'is-invalid': networkState.error,
+      'is-invalid': networkState.error || formik.errors.body,
     },
   );
 
@@ -65,11 +66,11 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
             aria-label="submit"
             type="submit"
             className="btn btn-primary"
-            disabled={networkState.sending}
+            disabled={networkState.sending || !formik.values.body.length}
           >
             {i18next.t('buttons.submit')}
           </button>
-          {networkState.error && <div className="d-block invalid-feedback">{i18next('errors.network')}</div>}
+          {networkState.error && <div className="d-block invalid-feedback">{i18next.t('errors.network')}</div>}
         </div>
       </div>
     </form>

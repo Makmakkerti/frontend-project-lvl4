@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import i18next from 'i18next';
 import {
@@ -38,13 +39,21 @@ const Rename = (props) => {
     [currentChannel.name],
   );
 
+  const channelNameSchema = Yup.object().shape({
+    body: Yup.string().trim()
+      .required(i18next.t('errors.required'))
+      .min(3, i18next.t('errors.invalidLength'))
+      .max(50, i18next.t('errors.invalidLength')),
+  });
+
   const formik = useFormik({
     initialValues: { body: currentChannel.name },
+    validationSchema: channelNameSchema,
     onSubmit: (values) => {
       const messageData = {
         data: {
           attributes: {
-            name: values.body,
+            name: values.body.trim(),
           },
         },
       };
@@ -78,7 +87,7 @@ const Rename = (props) => {
                 onChange={formik.handleChange}
                 ref={modalInputRef}
               />
-
+              {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
               <div className="d-flex justify-content-end">
                 <Button variant="secondary" className="mr-2" onClick={handleClose(dispatch)}>
                   {i18next.t('buttons.cancel')}

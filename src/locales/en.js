@@ -1,7 +1,7 @@
 const en = {
   translation: {
     titles: {
-      channels: 'channels',
+      channels: 'Channels',
       add: 'Add channel',
       rename: 'Rename channel',
       remove: 'Remove channel',
@@ -15,6 +15,7 @@ const en = {
     errors: {
       network: 'Network error',
       invalidLength: 'Must be 3 to 20 characters',
+      required: 'This field cannot be empty',
     },
     confirmQuestion: 'Are you sure?',
   },
