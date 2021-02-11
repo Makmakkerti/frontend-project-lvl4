@@ -8,6 +8,7 @@ import {
   Modal, Button, Form,
 } from 'react-bootstrap';
 import { closeModal } from '../../store/modal';
+import routes from '../../routes';
 
 const mapStateToProps = (state) => ({
   modalState: state.modalState,
@@ -58,7 +59,7 @@ const Rename = (props) => {
         },
       };
 
-      axios.patch(`/api/v1/channels/${currentChannelId}`, messageData)
+      axios.patch(routes.channelPath(currentChannelId), messageData)
         .then(({ data }) => {
           const { attributes } = data.data;
           console.log(attributes);

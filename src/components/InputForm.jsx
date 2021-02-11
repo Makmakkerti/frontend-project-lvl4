@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
 import { networkDefaults, networkError, networkSending } from '../store/network';
+import routes from '../routes';
 
 const mapStateToProps = (state) => ({
   currentChannelId: state.currentChannelId,
@@ -28,7 +29,7 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
 
     dispatch(networkSending());
 
-    axios.post(`/api/v1/channels/${currentChannelId}/messages`, messageData)
+    axios.post(routes.channelMessagesPath(currentChannelId), messageData)
       .then(() => {
         dispatch(networkDefaults());
         resetForm();

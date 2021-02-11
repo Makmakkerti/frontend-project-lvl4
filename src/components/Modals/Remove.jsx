@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import i18next from 'i18next';
 import { closeModal } from '../../store/modal';
+import { selectChannel } from '../../store/currentChannel';
+import routes from '../../routes';
 
 const mapStateToProps = (state) => ({
   modalState: state.modalState,
@@ -20,10 +22,9 @@ const Remove = (props) => {
   } = props;
 
   const handleRemove = () => {
-    axios.delete(`/api/v1/channels/${currentChannelId}`)
-      .then((resp) => {
-        const { data } = resp;
-        console.log(data);
+    axios.delete(routes.channelPath(currentChannelId))
+      .then(() => {
+        dispatch(selectChannel({ currentChannelId: 1 }));
       })
       .catch((error) => {
         console.log(error);
