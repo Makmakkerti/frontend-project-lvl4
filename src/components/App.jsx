@@ -10,7 +10,8 @@ import Messages from './Messages';
 import getModal from './Modals/index';
 import UserNameContext from '../app-context';
 
-const rollbarService = new Rollbar({
+// eslint-disable-next-line no-underscore-dangle
+const rollbar = new Rollbar({
   accessToken: '94533ecfb7424adfbe31859f9b68dfb6',
   captureUncaught: true,
   captureUnhandledRejections: true,
@@ -19,7 +20,7 @@ const rollbarService = new Rollbar({
   },
 });
 
-rollbarService.info('Chat App test log');
+rollbar.log('Hello from Chat');
 
 if (!Cookies.get('username')) {
   const fakeName = faker.fake('{{name.firstName}}_{{name.lastName}}');
