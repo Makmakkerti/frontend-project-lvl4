@@ -1,6 +1,7 @@
 /* eslint-disable functional/no-this-expression */
 /* eslint-disable functional/no-class */
 import React from 'react';
+import Rollbar from 'rollbar';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import faker from 'faker';
@@ -8,6 +9,17 @@ import Channels from './Channels';
 import Messages from './Messages';
 import getModal from './Modals/index';
 import UserNameContext from '../app-context';
+
+const rollbarService = new Rollbar({
+  accessToken: '94533ecfb7424adfbe31859f9b68dfb6',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+    environment: 'production',
+  },
+});
+
+rollbarService.info('Chat App test log');
 
 if (!Cookies.get('username')) {
   const fakeName = faker.fake('{{name.firstName}}_{{name.lastName}}');
