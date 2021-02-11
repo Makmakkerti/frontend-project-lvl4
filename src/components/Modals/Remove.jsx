@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
+import i18next from 'i18next';
 import { closeModal } from '../../store/modal';
 
 const mapStateToProps = (state) => ({
@@ -34,13 +35,13 @@ const Remove = (props) => {
     <>
       <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
         <Modal.Header closeButton>
-          <Modal.Title>Remove channel</Modal.Title>
+          <Modal.Title>{i18next.t('titles.remove')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure?
+          {i18next.t('confirmQuestion')}
           <div className="d-flex justify-content-between">
-            <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose(dispatch)}>Cancel</button>
-            <button type="button" className="btn btn-danger" onClick={handleRemove}>Confirm</button>
+            <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose(dispatch)}>{i18next.t('buttons.cancel')}</button>
+            <button type="button" className="btn btn-danger" onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
           </div>
         </Modal.Body>
       </Modal>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useFormik } from 'formik';
+import i18next from 'i18next';
 import {
   Modal, Button, Form,
 } from 'react-bootstrap';
@@ -45,7 +46,7 @@ const Add = (props) => {
     <>
       <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add channel</Modal.Title>
+          <Modal.Title>{i18next.t('titles.add')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate="" onSubmit={formik.handleSubmit}>
@@ -60,10 +61,10 @@ const Add = (props) => {
 
               <div className="d-flex justify-content-end">
                 <Button variant="secondary" className="mr-2" onClick={handleClose(dispatch)}>
-                  Cancel
+                  {i18next.t('buttons.cancel')}
                 </Button>
                 <Button variant="primary" type="submit">
-                  Submit
+                  {i18next.t('buttons.submit')}
                 </Button>
               </div>
             </Form.Group>

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { connect } from 'react-redux';
+import i18next from 'i18next';
 import {
   Dropdown, DropdownButton, Button, ButtonGroup,
 } from 'react-bootstrap';
@@ -45,7 +46,7 @@ const Channels = (props) => {
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
-        <span>Channels</span>
+        <span>{i18next.t('titles.channels')}</span>
         <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleAddModal}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">
@@ -89,10 +90,10 @@ const Channels = (props) => {
                     <Button type="button" className={addedBtnClasses}>{c.name}</Button>
                     <DropdownButton title="" type="button" aria-haspopup="true" className={dropdownBtnClasses} id="bg-nested-dropdown">
                       <Dropdown.Item eventKey={c.id} onClick={handleRenameModal}>
-                        Rename
+                        {i18next.t('buttons.rename')}
                       </Dropdown.Item>
                       <Dropdown.Item eventKey={c.id} onClick={handleRemoveModal}>
-                        Remove
+                        {i18next.t('buttons.remove')}
                       </Dropdown.Item>
                     </DropdownButton>
                   </ButtonGroup>

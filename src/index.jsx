@@ -3,12 +3,15 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import '../assets/application.scss';
-import { configureStore } from '@reduxjs/toolkit';
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import socket from 'io';
+import { Provider } from 'react-redux';
+import '../assets/application.scss';
+import { configureStore } from '@reduxjs/toolkit';
+import i18next from 'i18next';
+
+import en from './locales/en';
 import App from './components/App';
 import reducer from './store/rootReducer';
 import { messageAdded, messagesRemoved } from './store/messages';
@@ -43,4 +46,12 @@ const jsx = (
   </Provider>
 );
 
-ReactDOM.render(jsx, document.querySelector('#chat'));
+i18next.init({
+  lng: 'en',
+  debug: false,
+  resources: {
+    en,
+  },
+}).then(() => {
+  ReactDOM.render(jsx, document.querySelector('#chat'));
+});

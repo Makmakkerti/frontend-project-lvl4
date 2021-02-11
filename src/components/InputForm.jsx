@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
+import cn from 'classnames';
+import i18next from 'i18next';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
@@ -33,7 +35,7 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
       })
       .catch((error) => {
         dispatch(networkError());
-        console.log('Network Error:: ', error);
+        console.log(error);
       });
   };
 
@@ -46,20 +48,28 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
     },
   });
 
+  const inputClasses = cn(
+    'mr-2',
+    'form-control',
+    {
+      'is-invalid': networkState.error,
+    },
+  );
+
   return (
     <form noValidate className="" onSubmit={formik.handleSubmit}>
       <div className="form-group">
         <div className="input-group">
-          <input name="body" aria-label="body" disabled={networkState.sending} className="mr-2 form-control" value={formik.values.body} onChange={formik.handleChange} />
+          <input name="body" aria-label="body" disabled={networkState.sending} className={inputClasses} value={formik.values.body} onChange={formik.handleChange} />
           <button
             aria-label="submit"
             type="submit"
             className="btn btn-primary"
             disabled={networkState.sending}
           >
-            Submit
+            {i18next.t('buttons.submit')}
           </button>
-          {networkState.error && <div className="d-block invalid-feedback">Network Error&nbsp;</div>}
+          {networkState.error && <div className="d-block invalid-feedback">{i18next('errors.network')}</div>}
         </div>
       </div>
     </form>
