@@ -21,6 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install xmllint
+        run: sudo apt-get install webpack-cli
+
       - name: Hexlet project check
         uses: hexlet/project-action@release
         with:
