@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import gon from 'gon';
 
 const slice = createSlice({
   name: 'messages',
-  initialState: [...gon.messages],
+  initialState: [],
   reducers: {
-    messageAdded: (messages, action) => {
+    addMessage: (messages, action) => {
       messages.push({
         ...action.payload.attributes,
       });
       return messages;
     },
-    messagesRemoved: (messages, { payload }) => messages.filter((m) => m.channelId !== payload.id),
+    removeChannelMessages: (messages, { payload }) => messages
+      .filter((m) => m.channelId !== payload.id),
   },
 });
 
-export const { messageAdded, messagesRemoved } = slice.actions;
+export const { actions } = slice;
 export default slice.reducer;

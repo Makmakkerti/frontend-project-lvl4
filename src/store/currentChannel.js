@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import gon from 'gon';
 
 const slice = createSlice({
   name: 'currentChannel',
-  initialState: gon.currentChannelId,
+  initialState: null,
   reducers: {
     selectChannel: (currentChannelId, action) => action.payload.currentChannelId,
   },
