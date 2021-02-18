@@ -2,20 +2,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-import ReactDOM from 'react-dom';
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import socket from 'io';
 import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
-import i18next from 'i18next';
 
 // @ts-ignore
 import gon from 'gon';
-import en from './locales/en';
+
 import App from './components/App';
-import reducer from './store/rootReducer';
+import reducer from './store';
 import { actions as messageActions } from './store/messages';
 import { actions as channelActions } from './store/channels';
 
@@ -45,18 +43,8 @@ socket.on('removeChannel', (msg) => {
   store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
 });
 
-const jsx = (
+export default () => (
   <Provider store={store}>
     <App />
   </Provider>
 );
-
-i18next.init({
-  lng: 'en',
-  debug: false,
-  resources: {
-    en,
-  },
-}).then(() => {
-  ReactDOM.render(jsx, document.querySelector('#chat'));
-});
