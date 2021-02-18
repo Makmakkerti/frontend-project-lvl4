@@ -13,8 +13,8 @@ import routes from '../../routes';
 
 const Rename = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
-  const currentChannel = useSelector((state) => state.channels
-    .find((channel) => currentChannelId === channel.id));
+  const channels = useSelector((state) => state.channels);
+  const currentChannel = channels.find((channel) => currentChannelId === channel.id);
 
   const dispatch = useDispatch();
   const modalInputRef = useRef();
