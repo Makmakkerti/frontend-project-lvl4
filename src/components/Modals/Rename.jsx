@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -25,7 +25,7 @@ const Rename = (props) => {
     modalState, channels, currentChannelId, dispatch,
   } = props;
   const currentChannel = channels.find((channel) => currentChannelId === channel.id);
-  const modalInputRef = React.createRef();
+  const modalInputRef = useRef();
 
   // AutoFocus Modal Input
   useEffect(() => {
@@ -72,36 +72,34 @@ const Rename = (props) => {
   });
 
   return (
-    <>
-      <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{i18next.t('titles.rename')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form noValidate="" onSubmit={formik.handleSubmit}>
-            <Form.Group controlId="formChannelName">
-              <Form.Control
-                type="text"
-                name="body"
-                className="mb-2 form-control"
-                value={formik.values.body}
-                onChange={formik.handleChange}
-                ref={modalInputRef}
-              />
-              {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="mr-2" onClick={handleClose(dispatch)}>
-                  {i18next.t('buttons.cancel')}
-                </Button>
-                <Button variant="primary" type="submit">
-                  {i18next.t('buttons.submit')}
-                </Button>
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
+      <Modal.Header closeButton>
+        <Modal.Title>{i18next.t('titles.rename')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form noValidate="" onSubmit={formik.handleSubmit}>
+          <Form.Group controlId="formChannelName">
+            <Form.Control
+              type="text"
+              name="body"
+              className="mb-2 form-control"
+              value={formik.values.body}
+              onChange={formik.handleChange}
+              ref={modalInputRef}
+            />
+            {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" className="mr-2" onClick={handleClose(dispatch)}>
+                {i18next.t('buttons.cancel')}
+              </Button>
+              <Button variant="primary" type="submit">
+                {i18next.t('buttons.submit')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

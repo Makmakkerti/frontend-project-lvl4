@@ -33,20 +33,18 @@ const Remove = (props) => {
   };
 
   return (
-    <>
-      <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{i18next.t('titles.remove')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {i18next.t('confirmQuestion')}
-          <div className="d-flex justify-content-between">
-            <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose(dispatch)}>{i18next.t('buttons.cancel')}</button>
-            <button type="button" className="btn btn-danger" onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Modal show={modalState.opened} onHide={handleClose(dispatch)}>
+      <Modal.Header closeButton>
+        <Modal.Title>{i18next.t('titles.remove')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {i18next.t('confirmQuestion')}
+        <div className="d-flex justify-content-between">
+          <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose(dispatch)}>{i18next.t('buttons.cancel')}</button>
+          <button type="button" className="btn btn-danger" onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
+        </div>
+      </Modal.Body>
+    </Modal>
   );
 };
 
