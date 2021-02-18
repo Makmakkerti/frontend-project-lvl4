@@ -25,6 +25,7 @@ const Add = () => {
   const formik = useFormik({
     initialValues: { body: '' },
     validationSchema: channelNameSchema,
+    validateOnChange: false,
     onSubmit: (values) => {
       const messageData = {
         data: {
@@ -35,10 +36,6 @@ const Add = () => {
       };
 
       axios.post(routes.channelsPath(), messageData)
-        .then(({ data }) => {
-          const { attributes } = data.data;
-          console.log(attributes);
-        })
         .catch((error) => {
           console.log(error);
         });

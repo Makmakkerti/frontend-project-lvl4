@@ -12,10 +12,11 @@ import { closeModal } from '../../store/modal';
 import routes from '../../routes';
 
 const Rename = () => {
-  const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannelId);
-  const channels = useSelector((state) => state.channels);
-  const currentChannel = channels.find((channel) => currentChannelId === channel.id);
+  const currentChannel = useSelector((state) => state.channels
+    .find((channel) => currentChannelId === channel.id));
+
+  const dispatch = useDispatch();
   const modalInputRef = useRef();
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
 
@@ -38,6 +39,7 @@ const Rename = () => {
   const formik = useFormik({
     initialValues: { body: currentChannel.name },
     validationSchema: channelNameSchema,
+    validateOnChange: false,
     onSubmit: (values) => {
       const messageData = {
         data: {
@@ -48,10 +50,6 @@ const Rename = () => {
       };
 
       axios.patch(routes.channelPath(currentChannelId), messageData)
-        .then(({ data }) => {
-          const { attributes } = data.data;
-          console.log(attributes);
-        })
         .catch((error) => {
           console.log(error);
         });
