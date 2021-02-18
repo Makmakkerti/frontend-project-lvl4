@@ -1,14 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import InputForm from './InputForm';
 
-const mapStateToProps = (state) => ({
-  currentChannelId: state.currentChannelId,
-  messages: state.messages,
-});
-
-const Messages = ({ currentChannelId, messages }) => {
-  const channelMessages = messages.filter((m) => m.channelId === currentChannelId);
+const Messages = () => {
+  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const channelMessages = useSelector((state) => state.messages
+    .filter((m) => m.channelId === currentChannelId));
 
   return (
     <div className="col h-100">
@@ -31,4 +28,4 @@ const Messages = ({ currentChannelId, messages }) => {
   );
 };
 
-export default connect(mapStateToProps)(Messages);
+export default Messages;

@@ -1,20 +1,18 @@
 import React, { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import cn from 'classnames';
 import i18next from 'i18next';
-import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
 import { networkDefaults, networkError, networkSending } from '../store/network';
 import routes from '../routes';
 
-const mapStateToProps = (state) => ({
-  currentChannelId: state.currentChannelId,
-  networkState: state.networkState,
-});
-
-const InputForm = ({ currentChannelId, networkState, dispatch }) => {
+const InputForm = () => {
+  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);
+  const dispatch = useDispatch();
 
   const handleAddMessage = (body, resetForm) => {
     const messageData = {
@@ -78,4 +76,4 @@ const InputForm = ({ currentChannelId, networkState, dispatch }) => {
   );
 };
 
-export default connect(mapStateToProps)(InputForm);
+export default InputForm;

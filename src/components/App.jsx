@@ -2,7 +2,7 @@
 /* eslint-disable functional/no-class */
 import React from 'react';
 import Rollbar from 'rollbar';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import faker from 'faker';
 import Channels from './Channels';
@@ -29,11 +29,8 @@ if (!Cookies.get('username')) {
 
 const username = Cookies.get('username');
 
-const mapStateToProps = (state) => ({
-  modalState: state.modalState,
-});
-
-const App = ({ modalState }) => {
+const App = () => {
+  const modalState = useSelector((state) => state.modalState);
   const ModalComponent = getModal(modalState.type);
 
   return (
@@ -47,4 +44,4 @@ const App = ({ modalState }) => {
   );
 };
 
-export default connect(mapStateToProps)(App);
+export default App;
