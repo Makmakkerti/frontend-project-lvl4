@@ -43,8 +43,10 @@ socket.on('removeChannel', (msg) => {
   store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
 });
 
-export default () => (
+const Init = () => (
   <Provider store={store}>
     <App />
   </Provider>
 );
+
+export default Init;

@@ -1,19 +1,26 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import i18next from 'i18next';
 import {
   Button, Form,
 } from 'react-bootstrap';
-import { closeModal } from '../../store/modal';
 import ModalWrapper from './ModalWrapper';
+import { closeModal } from '../../store/modal';
 import routes from '../../routes';
 
 const Add = () => {
   const dispatch = useDispatch();
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
+  const inputRef = useRef();
+  const setFocus = () => {
+    if (inputRef.current) inputRef.current.focus();
+  };
+
+  // AutoFocus Modal Input
+  useEffect(() => setFocus());
 
   const channelNameSchema = Yup.object().shape({
     body: Yup.string().trim()
@@ -57,6 +64,7 @@ const Add = () => {
             className="mb-2 form-control"
             value={formik.values.body}
             onChange={formik.handleChange}
+            ref={inputRef}
           />
           {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
 
