@@ -36,6 +36,10 @@ const Add = () => {
       };
 
       axios.post(routes.channelsPath(), messageData)
+        .then(({ data }) => {
+          const { attributes } = data.data;
+          console.log(attributes);
+        })
         .catch((error) => {
           console.log(error);
         });
