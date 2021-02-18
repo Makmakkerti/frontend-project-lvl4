@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import i18next from 'i18next';
 import {
   Dropdown, DropdownButton, Button, ButtonGroup,
@@ -9,37 +9,19 @@ import cn from 'classnames';
 import { selectChannel } from '../store/currentChannel';
 import { openModal, setModalType } from '../store/modal';
 
-const mapStateToProps = (state) => {
-  const props = {
-    currentChannelId: state.currentChannelId,
-    channels: state.channels,
-  };
-  return props;
-};
-
-const Channels = (props) => {
-  const { channels, currentChannelId, dispatch } = props;
+const Channels = () => {
+  const dispatch = useDispatch();
+  const channels = useSelector((state) => state.channels);
+  const currentChannelId = useSelector((state) => state.currentChannelId);
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();
     dispatch(selectChannel({ currentChannelId: id }));
   };
 
-  const handleAddModal = (e) => {
+  const handleModalType = (type) => (e) => {
     e.preventDefault();
-    dispatch(setModalType({ type: 'adding' }));
-    dispatch(openModal());
-  };
-
-  const handleRenameModal = (e) => {
-    e.preventDefault();
-    dispatch(setModalType({ type: 'renaming' }));
-    dispatch(openModal());
-  };
-
-  const handleRemoveModal = (e) => {
-    e.preventDefault();
-    dispatch(setModalType({ type: 'removing' }));
+    dispatch(setModalType({ type }));
     dispatch(openModal());
   };
 
@@ -47,7 +29,7 @@ const Channels = (props) => {
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>{i18next.t('titles.channels')}</span>
-        <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleAddModal}>+</button>
+        <button type="button" className="ml-auto p-0 btn btn-link" onClick={handleModalType('adding')}>+</button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill">
         {
@@ -89,10 +71,10 @@ const Channels = (props) => {
                   <ButtonGroup role="group" className="d-flex mb-2 dropdown btn-group" onClick={handleSwitchChannel(c.id)}>
                     <Button type="button" className={addedBtnClasses}>{c.name}</Button>
                     <DropdownButton title="" type="button" aria-haspopup="true" className={dropdownBtnClasses} id="bg-nested-dropdown">
-                      <Dropdown.Item eventKey={c.id} onClick={handleRenameModal}>
+                      <Dropdown.Item eventKey={c.id} onClick={handleModalType('renaming')}>
                         {i18next.t('buttons.rename')}
                       </Dropdown.Item>
-                      <Dropdown.Item eventKey={c.id} onClick={handleRemoveModal}>
+                      <Dropdown.Item eventKey={c.id} onClick={handleModalType('removing')}>
                         {i18next.t('buttons.remove')}
                       </Dropdown.Item>
                     </DropdownButton>
@@ -113,4 +95,4 @@ const Channels = (props) => {
   );
 };
 
-export default connect(mapStateToProps)(Channels);
+export default Channels;
