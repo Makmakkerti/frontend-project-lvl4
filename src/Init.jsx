@@ -17,7 +17,6 @@ import { actions as channelActions } from './store/channels';
 import { actions as networkActions } from './store/network';
 
 const socket = io();
-console.log(socket);
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -45,11 +44,11 @@ socket.on('removeChannel', (msg) => {
   store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
 });
 
-socket.io.on('open', () => {
+socket.on('connect', () => {
   store.dispatch(networkActions.setDefaults());
 });
 
-socket.io.on('error', () => {
+socket.on('disconnect', () => {
   store.dispatch(networkActions.setError());
 });
 
