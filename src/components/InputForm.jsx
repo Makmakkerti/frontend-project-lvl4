@@ -5,7 +5,7 @@ import cn from 'classnames';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
-import { networkDefaults, networkError, networkSending } from '../store/network';
+import { actions as networkActions } from '../store/network';
 import routes from '../routes';
 
 const InputForm = () => {
@@ -25,15 +25,15 @@ const InputForm = () => {
       },
     };
 
-    dispatch(networkSending());
+    dispatch(networkActions.setSending());
 
     axios.post(routes.channelMessagesPath(currentChannelId), messageData)
       .then(() => {
-        dispatch(networkDefaults());
+        dispatch(networkActions.setDefaults());
         resetForm();
       })
       .catch((error) => {
-        dispatch(networkError());
+        dispatch(networkActions.setError());
         console.log(error);
       });
   };

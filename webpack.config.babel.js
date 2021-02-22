@@ -9,7 +9,7 @@ module.exports = {
   mode,
   externals: {
     gon: 'gon',
-    io: 'io',
+
   },
   resolve: {
     extensions: ['.js', '.jsx'],

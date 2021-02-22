@@ -2,9 +2,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import socket from 'io';
+import { io } from 'socket.io-client';
 import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
@@ -16,6 +14,10 @@ import App from './components/App';
 import reducer from './store';
 import { actions as messageActions } from './store/messages';
 import { actions as channelActions } from './store/channels';
+import { actions as networkActions } from './store/network';
+
+const socket = io();
+console.log(socket);
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -41,6 +43,14 @@ socket.on('renameChannel', (msg) => {
 socket.on('removeChannel', (msg) => {
   store.dispatch(channelActions.removeChannel({ id: msg.data.id }));
   store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
+});
+
+socket.io.on('open', () => {
+  store.dispatch(networkActions.setDefaults());
+});
+
+socket.io.on('error', () => {
+  store.dispatch(networkActions.setError());
 });
 
 const Init = () => (

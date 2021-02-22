@@ -4,11 +4,11 @@ const slice = createSlice({
   name: 'network',
   initialState: { error: null, sending: false },
   reducers: {
-    networkError: () => ({ error: true, sending: false }),
-    networkSending: () => ({ error: null, sending: true }),
-    networkDefaults: () => ({ error: null, sending: false }),
+    setError: () => ({ error: true, sending: false }),
+    setSending: () => ({ error: null, sending: true }),
+    setDefaults: () => ({ error: null, sending: false }),
   },
 });
 
-export const { networkDefaults, networkError, networkSending } = slice.actions;
+export const { actions } = slice;
 export default slice.reducer;
