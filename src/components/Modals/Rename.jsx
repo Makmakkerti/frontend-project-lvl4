@@ -50,9 +50,8 @@ const Rename = () => {
       };
 
       axios.patch(routes.channelPath(currentChannelId), messageData)
-        .then(({ data }) => {
-          const { attributes } = data.data;
-          console.log(attributes);
+        .then(() => {
+
         })
         .catch((error) => {
           console.log(error);
