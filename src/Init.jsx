@@ -44,11 +44,11 @@ socket.on('removeChannel', (msg) => {
   store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
 });
 
-socket.on('connect', () => {
+socket.io.on('open', () => {
   store.dispatch(networkActions.setDefaults());
 });
 
-socket.on('disconnect', () => {
+socket.io.on('error', () => {
   store.dispatch(networkActions.setError());
 });
 
