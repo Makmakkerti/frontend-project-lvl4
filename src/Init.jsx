@@ -20,8 +20,6 @@ const socket = io({
   timeout: 3000,
 });
 
-console.log(socket);
-
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
