@@ -17,7 +17,7 @@ import { actions as channelActions } from './store/channels';
 import { actions as networkActions } from './store/network';
 
 const socket = io({
-  timeout: 3000,
+  timeout: 1000,
 });
 
 if (process.env.NODE_ENV !== 'production') {
