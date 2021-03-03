@@ -9,7 +9,7 @@ const ModalWrapper = ({ children, title }) => {
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
 
   return (
-    <Modal show={modalState.opened} onHide={handleClose}>
+    <Modal show={modalState.opened} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

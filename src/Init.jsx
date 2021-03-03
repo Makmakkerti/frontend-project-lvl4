@@ -1,4 +1,3 @@
-// @ts-check
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
@@ -6,10 +5,7 @@ import { io } from 'socket.io-client';
 import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
-
-// @ts-ignore
 import gon from 'gon';
-
 import App from './components/App';
 import reducer from './store';
 import { actions as messageActions } from './store/messages';

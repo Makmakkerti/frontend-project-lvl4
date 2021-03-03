@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
+import { selectChannel } from '../../store/currentChannel';
 import routes from '../../routes';
 
 const Add = () => {
@@ -33,7 +34,7 @@ const Add = () => {
     initialValues: { body: '' },
     validationSchema: channelNameSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const messageData = {
         data: {
           attributes: {
@@ -42,14 +43,13 @@ const Add = () => {
         },
       };
 
-      axios.post(routes.channelsPath(), messageData)
-        .then(() => {
-
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      dispatch(closeModal());
+      try {
+        const { data } = await axios.post(routes.channelsPath(), messageData);
+        dispatch(closeModal());
+        dispatch(selectChannel({ currentChannelId: data.data.attributes.id }));
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 

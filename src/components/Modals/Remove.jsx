@@ -11,16 +11,16 @@ const Remove = () => {
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
+  const GeneralChannelId = 1;
 
-  const handleRemove = () => {
-    axios.delete(routes.channelPath(currentChannelId))
-      .then(() => {
-        dispatch(selectChannel({ currentChannelId: 1 }));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    dispatch(closeModal());
+  const handleRemove = async () => {
+    try {
+      await axios.delete(routes.channelPath(currentChannelId));
+      dispatch(selectChannel({ currentChannelId: GeneralChannelId }));
+      dispatch(closeModal());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

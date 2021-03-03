@@ -21,13 +21,9 @@ const Rename = () => {
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
 
   // AutoFocus Modal Input
-  useEffect(() => modalInputRef.current.focus());
-
+  useEffect(() => modalInputRef.current.focus(), []);
   // AutoSelect Modal Input
-  useEffect(
-    () => modalInputRef.current.select(),
-    [currentChannel.name],
-  );
+  useEffect(() => modalInputRef.current.select(), []);
 
   const channelNameSchema = Yup.object().shape({
     body: Yup.string().trim()
@@ -40,7 +36,7 @@ const Rename = () => {
     initialValues: { body: currentChannel.name },
     validationSchema: channelNameSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const messageData = {
         data: {
           attributes: {
@@ -49,14 +45,12 @@ const Rename = () => {
         },
       };
 
-      axios.patch(routes.channelPath(currentChannelId), messageData)
-        .then(() => {
-
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      dispatch(closeModal());
+      try {
+        await axios.patch(routes.channelPath(currentChannelId), messageData);
+        dispatch(closeModal());
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
