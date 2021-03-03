@@ -14,6 +14,7 @@ import routes from '../../routes';
 const Rename = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channels = useSelector((state) => state.channels);
+  const channelNames = channels.map((ch) => ch.name);
   const currentChannel = channels.find((channel) => currentChannelId === channel.id);
 
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Rename = () => {
   const channelNameSchema = Yup.object().shape({
     body: Yup.string().trim()
       .required(i18next.t('errors.required'))
+      .notOneOf(channelNames, i18next.t('errors.sameName'))
       .min(3, i18next.t('errors.invalidLength'))
       .max(50, i18next.t('errors.invalidLength')),
   });

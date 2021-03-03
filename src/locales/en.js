@@ -16,6 +16,7 @@ const en = {
       network: 'Network error',
       invalidLength: 'Must be 3 to 20 characters',
       required: 'This field cannot be empty',
+      sameName: 'Channel name already in use, no duplicates',
     },
     confirmQuestion: 'Are you sure?',
   },

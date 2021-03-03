@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -15,6 +15,8 @@ import routes from '../../routes';
 const Add = () => {
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeModal());
+  const channels = useSelector((state) => state.channels);
+  const channelNames = channels.map((ch) => ch.name);
   const inputRef = useRef();
   const setFocus = () => {
     if (inputRef.current) inputRef.current.focus();
@@ -27,6 +29,7 @@ const Add = () => {
     body: Yup.string().trim()
       .required(i18next.t('errors.required'))
       .min(3, i18next.t('errors.invalidLength'))
+      .notOneOf(channelNames, i18next.t('errors.sameName'))
       .max(50, i18next.t('errors.invalidLength')),
   });
 

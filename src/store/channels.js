@@ -10,8 +10,10 @@ const slice = createSlice({
       });
     },
     removeChannel: (channels, action) => channels.filter((c) => c.id !== action.payload.id),
-    renameChannel: (channels, { payload: { attributes } }) => channels
-      .map((c) => (c.id !== attributes.id ? c : { ...c, name: attributes.name })),
+    renameChannel: (channels, { payload: { attributes } }) => {
+      const channel = channels.find((c) => (c.id === attributes.id));
+      channel.name = attributes.name;
+    },
   },
 });
 
