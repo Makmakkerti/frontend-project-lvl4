@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import cn from 'classnames';
+import * as Yup from 'yup';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
@@ -13,6 +14,11 @@ const InputForm = () => {
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);
   const dispatch = useDispatch();
+
+  const messageSchema = Yup.object().shape({
+    body: Yup.string().trim()
+      .required(i18next.t('errors.required')),
+  });
 
   const handleAddMessage = (body, resetForm) => {
     const messageData = {
@@ -40,10 +46,9 @@ const InputForm = () => {
 
   const formik = useFormik({
     initialValues: { body: '' },
+    validationSchema: messageSchema,
     onSubmit: (values, { resetForm }) => {
-      // Prevent sending empty message
       const message = values.body.trim();
-      if (!message.length) return;
       handleAddMessage(message, resetForm);
     },
   });
