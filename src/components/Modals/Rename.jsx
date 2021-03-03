@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -18,7 +18,7 @@ const Rename = () => {
 
   const dispatch = useDispatch();
   const modalInputRef = useRef();
-  const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
+  const handleClose = () => dispatch(closeModal());
 
   // AutoFocus Modal Input
   useEffect(() => modalInputRef.current.focus(), []);

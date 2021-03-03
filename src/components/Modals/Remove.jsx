@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import i18next from 'i18next';
@@ -10,7 +10,7 @@ import routes from '../../routes';
 const Remove = () => {
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannelId);
-  const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
+  const handleClose = () => dispatch(closeModal());
   const GeneralChannelId = 1;
 
   const handleRemove = async () => {

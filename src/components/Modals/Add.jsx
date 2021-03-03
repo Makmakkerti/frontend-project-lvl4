@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -14,7 +14,7 @@ import routes from '../../routes';
 
 const Add = () => {
   const dispatch = useDispatch();
-  const handleClose = useCallback(() => dispatch(closeModal()), [dispatch]);
+  const handleClose = () => dispatch(closeModal());
   const inputRef = useRef();
   const setFocus = () => {
     if (inputRef.current) inputRef.current.focus();
