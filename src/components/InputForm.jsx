@@ -20,7 +20,7 @@ const InputForm = () => {
       .required(i18next.t('errors.required')),
   });
 
-  const handleAddMessage = (body, resetForm) => {
+  const handleAddMessage = async (body, resetForm) => {
     const messageData = {
       data: {
         attributes: {
@@ -31,25 +31,21 @@ const InputForm = () => {
       },
     };
 
-    dispatch(networkActions.setSending());
-
-    axios.post(routes.channelMessagesPath(currentChannelId), messageData)
-      .then(() => {
-        dispatch(networkActions.setDefaults());
-        resetForm();
-      })
-      .catch((error) => {
-        dispatch(networkActions.setError());
-        console.log(error);
-      });
+    try {
+      await axios.post(routes.channelMessagesPath(currentChannelId), messageData);
+      dispatch(networkActions.setDefaults());
+      resetForm();
+    } catch (error) {
+      dispatch(networkActions.setError());
+      console.log(error);
+    }
   };
 
   const formik = useFormik({
     initialValues: { body: '' },
     validationSchema: messageSchema,
-    onSubmit: (values, { resetForm }) => {
-      const message = values.body.trim();
-      handleAddMessage(message, resetForm);
+    onSubmit: async (values, { resetForm }) => {
+      await handleAddMessage(values.body, resetForm);
     },
   });
 
@@ -65,12 +61,12 @@ const InputForm = () => {
     <form noValidate className="" onSubmit={formik.handleSubmit}>
       <div className="form-group">
         <div className="input-group">
-          <input name="body" aria-label="body" disabled={networkState.sending} className={inputClasses} value={formik.values.body} onChange={formik.handleChange} />
+          <input name="body" aria-label="body" disabled={formik.isSubmitting} className={inputClasses} value={formik.values.body} onChange={formik.handleChange} />
           <button
             aria-label="submit"
             type="submit"
             className="btn btn-primary"
-            disabled={networkState.sending || !formik.values.body.length}
+            disabled={formik.isSubmitting || !formik.values.body.length}
           >
             {i18next.t('buttons.submit')}
           </button>
