@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import InputForm from './InputForm';
 
-const Messages = () => {
+const Messages = ({ i18next }) => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channelMessages = useSelector((state) => state.messages
     .filter((m) => m.channelId === currentChannelId));
@@ -21,7 +21,7 @@ const Messages = () => {
           ))}
         </div>
         <div className="mt-auto">
-          <InputForm />
+          <InputForm i18next={i18next} />
         </div>
       </div>
     </div>

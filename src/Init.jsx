@@ -4,11 +4,11 @@ import i18next from 'i18next';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Rollbar from 'rollbar';
-import { io } from 'socket.io-client';
+import IO from 'socket.io-client';
 import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
-import preloadedState from 'gon';
+import gon from 'gon';
 import en from './locales/en';
 import App from './components/App';
 import reducer from './store';
@@ -18,16 +18,19 @@ import { actions as networkActions } from './store/network';
 import { selectChannel } from './store/currentChannel';
 
 export default async () => {
-  await i18next.init({
+  const i18nextInstance = i18next.createInstance();
+  await i18nextInstance.init({
     lng: 'en',
     resources: {
       en,
     },
   });
 
-  const socket = io({
+  const socket = new IO({
     timeout: 1000,
   });
+
+  const preloadedState = { ...gon };
 
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
@@ -76,7 +79,7 @@ export default async () => {
 
   const Init = () => (
     <Provider store={store}>
-      <App />
+      <App i18next={i18nextInstance} />
     </Provider>
   );
 

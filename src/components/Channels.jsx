@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import i18next from 'i18next';
 import {
   Dropdown, DropdownButton, Button, ButtonGroup,
 } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import cn from 'classnames';
 import { selectChannel } from '../store/currentChannel';
 import { openModal, setModalType } from '../store/modal';
 
-const Channels = () => {
+const Channels = ({ i18next }) => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
   const currentChannelId = useSelector((state) => state.currentChannelId);

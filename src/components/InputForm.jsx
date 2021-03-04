@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import cn from 'classnames';
 import * as Yup from 'yup';
-import i18next from 'i18next';
 import { useFormik } from 'formik';
 import UserNameContext from '../app-context';
 import { actions as networkActions } from '../store/network';
 import routes from '../routes';
 
-const InputForm = () => {
+const InputForm = ({ i18next }) => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);

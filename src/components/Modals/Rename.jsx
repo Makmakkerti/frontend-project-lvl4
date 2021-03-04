@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import i18next from 'i18next';
 import {
   Button, Form,
 } from 'react-bootstrap';
@@ -11,7 +10,7 @@ import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
 import routes from '../../routes';
 
-const Rename = () => {
+const Rename = ({ i18next }) => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channels = useSelector((state) => state.channels);
   const channelNames = channels.map((ch) => ch.name);

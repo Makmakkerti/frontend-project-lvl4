@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import i18next from 'i18next';
 import {
   Button, Form,
 } from 'react-bootstrap';
@@ -12,7 +11,7 @@ import { closeModal } from '../../store/modal';
 import { selectChannel } from '../../store/currentChannel';
 import routes from '../../routes';
 
-const Add = () => {
+const Add = ({ i18next }) => {
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeModal());
   const channels = useSelector((state) => state.channels);
