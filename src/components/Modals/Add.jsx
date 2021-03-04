@@ -13,8 +13,10 @@ import routes from '../../routes';
 
 const Add = ({ i18next }) => {
   const dispatch = useDispatch();
-  const handleClose = () => dispatch(closeModal());
+  const networkState = useSelector((state) => state.networkState);
   const channels = useSelector((state) => state.channels);
+
+  const handleClose = () => dispatch(closeModal());
   const channelNames = channels.map((ch) => ch.name);
   const inputRef = useRef();
   const setFocus = () => {
@@ -40,7 +42,7 @@ const Add = ({ i18next }) => {
       const messageData = {
         data: {
           attributes: {
-            name: values.body.trim(),
+            name: values.body,
           },
         },
       };
@@ -59,6 +61,7 @@ const Add = ({ i18next }) => {
     <ModalWrapper title={i18next.t('titles.add')}>
       <Form noValidate="" onSubmit={formik.handleSubmit}>
         <Form.Group controlId="formChannelName">
+          {networkState.error && <div className="d-block invalid-feedback">{i18next.t('errors.network')}</div>}
           <Form.Control
             type="text"
             name="body"
@@ -73,7 +76,7 @@ const Add = ({ i18next }) => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={networkState.error}>
               {i18next.t('buttons.submit')}
             </Button>
           </div>

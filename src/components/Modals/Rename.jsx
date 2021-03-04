@@ -11,12 +11,13 @@ import { closeModal } from '../../store/modal';
 import routes from '../../routes';
 
 const Rename = ({ i18next }) => {
+  const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channels = useSelector((state) => state.channels);
+  const networkState = useSelector((state) => state.networkState);
+
   const channelNames = channels.map((ch) => ch.name);
   const currentChannel = channels.find((channel) => currentChannelId === channel.id);
-
-  const dispatch = useDispatch();
   const modalInputRef = useRef();
   const handleClose = () => dispatch(closeModal());
 
@@ -41,7 +42,7 @@ const Rename = ({ i18next }) => {
       const messageData = {
         data: {
           attributes: {
-            name: values.body.trim(),
+            name: values.body,
           },
         },
       };
@@ -59,6 +60,7 @@ const Rename = ({ i18next }) => {
     <ModalWrapper title={i18next.t('titles.rename')}>
       <Form noValidate="" onSubmit={formik.handleSubmit}>
         <Form.Group controlId="formChannelName">
+          {networkState.error && <div className="d-block invalid-feedback">{i18next.t('errors.network')}</div>}
           <Form.Control
             type="text"
             name="body"
@@ -72,7 +74,7 @@ const Rename = ({ i18next }) => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={networkState.error}>
               {i18next.t('buttons.submit')}
             </Button>
           </div>

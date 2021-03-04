@@ -11,6 +11,7 @@ const Remove = ({ i18next }) => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const handleClose = () => dispatch(closeModal());
   const GeneralChannelId = 1;
+  const networkState = useSelector((state) => state.networkState);
 
   const handleRemove = async () => {
     try {
@@ -24,10 +25,11 @@ const Remove = ({ i18next }) => {
 
   return (
     <ModalWrapper title={i18next.t('titles.remove')}>
+      {networkState.error && <div className="d-block invalid-feedback">{i18next.t('errors.network')}</div>}
       {i18next.t('confirmQuestion')}
       <div className="d-flex justify-content-between">
         <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose}>{i18next.t('buttons.cancel')}</button>
-        <button type="button" className="btn btn-danger" onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
+        <button type="button" className="btn btn-danger" disabled={networkState.error} onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
       </div>
     </ModalWrapper>
   );
