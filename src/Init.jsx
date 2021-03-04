@@ -15,6 +15,7 @@ import reducer from './store';
 import { actions as messageActions } from './store/messages';
 import { actions as channelActions } from './store/channels';
 import { actions as networkActions } from './store/network';
+import { selectChannel } from './store/currentChannel';
 
 export default async () => {
   await i18next.init({
@@ -51,7 +52,7 @@ export default async () => {
 
   socket.on('removeChannel', (msg) => {
     store.dispatch(channelActions.removeChannel({ id: msg.data.id }));
-    store.dispatch(messageActions.removeChannelMessages({ id: msg.data.id }));
+    store.dispatch(selectChannel({ currentChannelId: 1 }));
   });
 
   socket.on('connect', () => {
