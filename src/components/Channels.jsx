@@ -5,8 +5,8 @@ import {
   Dropdown, DropdownButton, Button, ButtonGroup,
 } from 'react-bootstrap';
 import cn from 'classnames';
-import { selectChannel } from '../store/currentChannel';
 import { openModal, setModalType } from '../store/modal';
+import { selectChannel } from '../store/currentChannel';
 
 const Channels = ({ i18next }) => {
   const dispatch = useDispatch();
