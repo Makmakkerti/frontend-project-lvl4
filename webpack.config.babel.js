@@ -10,6 +10,7 @@ const dotenv = de.config({
 });
 
 const mode = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV ? process.env : dotenv.parsed;
 
 module.exports = {
   mode,
@@ -32,7 +33,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(dotenv.parsed),
+      'process.env': JSON.stringify(environment),
     }),
   ],
   module: {
