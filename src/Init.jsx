@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+
 import i18next from 'i18next';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -66,8 +67,10 @@ export default async () => {
     store.dispatch(networkActions.setError());
   });
 
+  const accessToken = process.env.ROLLBAR_KEY;
+
   const rollbar = new Rollbar({
-    accessToken: '94533ecfb7424adfbe31859f9b68dfb6',
+    accessToken,
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
