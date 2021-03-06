@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -6,16 +5,15 @@ import {
 } from 'react-bootstrap';
 import cn from 'classnames';
 import { openModal, setModalType } from '../store/modal';
-import { selectChannel } from '../store/currentChannel';
+import { actions as channelActions } from '../store/channels';
 
 const Channels = ({ i18next }) => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();
-    dispatch(selectChannel({ currentChannelId: id }));
+    dispatch(channelActions.setActive({ id }));
   };
 
   const handleModalType = (type) => (e) => {
@@ -33,7 +31,7 @@ const Channels = ({ i18next }) => {
       <ul className="nav flex-column nav-pills nav-fill">
         {
           channels.map((c) => {
-            const buttonStatus = c.id === currentChannelId ? 'primary' : 'light';
+            const buttonStatus = c.active ? 'primary' : 'light';
             const defaultBtnClasses = cn(
               'nav-link',
               'btn-block',

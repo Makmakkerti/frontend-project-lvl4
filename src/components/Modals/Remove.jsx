@@ -3,20 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
-import { selectChannel } from '../../store/currentChannel';
+import { actions as channelActions } from '../../store/channels';
 import routes from '../../routes';
 
 const Remove = ({ i18next }) => {
   const dispatch = useDispatch();
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const currentChannel = useSelector((state) => state.channels.find((ch) => ch.active));
   const handleClose = () => dispatch(closeModal());
-  const GeneralChannelId = 1;
   const networkState = useSelector((state) => state.networkState);
 
   const handleRemove = async () => {
     try {
-      await axios.delete(routes.channelPath(currentChannelId));
-      dispatch(selectChannel({ currentChannelId: GeneralChannelId }));
+      await axios.delete(routes.channelPath(currentChannel.id));
+      dispatch(channelActions.setActive({ id: 1 }));
       dispatch(closeModal());
     } catch (error) {
       console.log(error);

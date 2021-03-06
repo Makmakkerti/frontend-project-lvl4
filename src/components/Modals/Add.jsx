@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
-import { selectChannel } from '../../store/currentChannel';
+import { actions as channelActions } from '../../store/channels';
 import routes from '../../routes';
 
 const Add = ({ i18next }) => {
@@ -50,9 +50,9 @@ const Add = ({ i18next }) => {
       try {
         const { data } = await axios.post(routes.channelsPath(), messageData);
         dispatch(closeModal());
-        dispatch(selectChannel({ currentChannelId: data.data.attributes.id }));
-      } catch (err) {
-        console.log(err);
+        dispatch(channelActions.setActive({ id: data.data.attributes.id }));
+      } catch (error) {
+        console.log(error);
       }
     },
   });

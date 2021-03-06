@@ -16,7 +16,6 @@ import reducer from './store';
 import { actions as messageActions } from './store/messages';
 import { actions as channelActions } from './store/channels';
 import { actions as networkActions } from './store/network';
-import { selectChannel } from './store/currentChannel';
 
 export default async () => {
   const i18nextInstance = i18next.createInstance();
@@ -31,7 +30,15 @@ export default async () => {
     timeout: 1000,
   });
 
-  const preloadedState = { ...gon };
+  const channels = gon.channels.map((ch) => {
+    // eslint-disable-next-line no-param-reassign
+    ch.active = ch.id === gon.currentChannelId;
+    return ch;
+  });
+
+  const { messages } = gon;
+
+  const preloadedState = { messages, channels };
 
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
@@ -55,8 +62,8 @@ export default async () => {
   });
 
   socket.on('removeChannel', (msg) => {
+    store.dispatch(channelActions.setActive({ id: 1 }));
     store.dispatch(channelActions.removeChannel({ id: msg.data.id }));
-    store.dispatch(selectChannel({ currentChannelId: 1 }));
   });
 
   socket.on('connect', () => {

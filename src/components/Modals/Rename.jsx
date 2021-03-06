@@ -12,12 +12,11 @@ import routes from '../../routes';
 
 const Rename = ({ i18next }) => {
   const dispatch = useDispatch();
-  const currentChannelId = useSelector((state) => state.currentChannelId);
   const channels = useSelector((state) => state.channels);
+  const channelNames = channels.map((ch) => ch.name);
+  const currentChannel = channels.find((channel) => channel.active);
   const networkState = useSelector((state) => state.networkState);
 
-  const channelNames = channels.map((ch) => ch.name);
-  const currentChannel = channels.find((channel) => currentChannelId === channel.id);
   const modalInputRef = useRef();
   const handleClose = () => dispatch(closeModal());
 
@@ -48,7 +47,7 @@ const Rename = ({ i18next }) => {
       };
 
       try {
-        await axios.patch(routes.channelPath(currentChannelId), messageData);
+        await axios.patch(routes.channelPath(currentChannel.id), messageData);
         dispatch(closeModal());
       } catch (error) {
         console.log(error);

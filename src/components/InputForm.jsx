@@ -9,7 +9,7 @@ import { actions as networkActions } from '../store/network';
 import routes from '../routes';
 
 const InputForm = ({ i18next }) => {
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const currentChannel = useSelector((state) => state.channels.find((ch) => ch.active));
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);
   const dispatch = useDispatch();
@@ -24,14 +24,14 @@ const InputForm = ({ i18next }) => {
       data: {
         attributes: {
           body,
-          channelId: currentChannelId,
+          channelId: currentChannel.id,
           nickname,
         },
       },
     };
 
     try {
-      await axios.post(routes.channelMessagesPath(currentChannelId), messageData);
+      await axios.post(routes.channelMessagesPath(currentChannel.id), messageData);
       dispatch(networkActions.setDefaults());
       resetForm();
     } catch (error) {

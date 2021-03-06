@@ -14,6 +14,11 @@ const slice = createSlice({
       const channel = channels.find((c) => (c.id === attributes.id));
       channel.name = attributes.name;
     },
+    setActive: (channels, { payload: { id } }) => channels.forEach((ch) => {
+      // eslint-disable-next-line no-param-reassign
+      ch.active = ch.id === id;
+      return ch;
+    }),
   },
 });
 

@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import InputForm from './InputForm';
 
 const Messages = ({ i18next }) => {
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const currentChannel = useSelector((state) => state.channels.find((ch) => ch.active));
   const channelMessages = useSelector((state) => state.messages
-    .filter((m) => m.channelId === currentChannelId));
+    .filter((m) => m.channelId === currentChannel.id));
   const chatContainer = React.createRef();
 
   const scrollToNewMessage = () => {
