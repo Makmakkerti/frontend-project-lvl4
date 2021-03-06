@@ -73,7 +73,7 @@ const Rename = ({ i18next }) => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit" disabled={networkState.error}>
+            <Button variant="primary" type="submit" disabled={networkState.error || formik.isSubmitting}>
               {i18next.t('buttons.submit')}
             </Button>
           </div>
