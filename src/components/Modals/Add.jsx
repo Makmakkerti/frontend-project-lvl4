@@ -24,7 +24,7 @@ const Add = ({ i18next }) => {
   };
 
   // AutoFocus Modal Input
-  useEffect(() => setFocus());
+  useEffect(() => setFocus(), []);
 
   const channelNameSchema = Yup.object().shape({
     body: Yup.string().trim()
