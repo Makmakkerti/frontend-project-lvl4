@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import cn from 'classnames';
@@ -14,6 +14,7 @@ const InputForm = () => {
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);
   const dispatch = useDispatch();
+  const inputRef = useRef();
 
   const messageSchema = Yup.object().shape({
     body: Yup.string().trim()
@@ -46,6 +47,7 @@ const InputForm = () => {
     validationSchema: messageSchema,
     onSubmit: async (values, { resetForm }) => {
       await handleAddMessage(values.body, resetForm);
+      inputRef.current.focus();
     },
   });
 
@@ -61,7 +63,7 @@ const InputForm = () => {
     <form noValidate className="" onSubmit={formik.handleSubmit}>
       <div className="form-group">
         <div className="input-group">
-          <input name="body" aria-label="body" disabled={formik.isSubmitting} className={inputClasses} value={formik.values.body} onChange={formik.handleChange} />
+          <input name="body" aria-label="body" ref={inputRef} disabled={formik.isSubmitting} className={inputClasses} value={formik.values.body} onChange={formik.handleChange} />
           <button
             aria-label="submit"
             type="submit"
