@@ -53,6 +53,17 @@ export default async () => {
     preloadedState,
   });
 
+  const updateOnlineStatus = () => {
+    if (navigator.onLine) {
+      store.dispatch(networkActions.setDefaults());
+    } else {
+      store.dispatch(networkActions.setError());
+    }
+  };
+
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+
   socket.on('newMessage', (msg) => {
     store.dispatch(messageActions.addMessage({ attributes: msg.data.attributes }));
   });

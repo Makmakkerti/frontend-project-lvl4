@@ -74,7 +74,7 @@ const InputForm = () => {
             aria-label="submit"
             type="submit"
             className="btn btn-primary"
-            disabled={formik.isSubmitting || !formik.values.body.length}
+            disabled={formik.isSubmitting || !formik.values.body.length || networkState.error}
           >
             {i18next.t('buttons.submit')}
           </button>
