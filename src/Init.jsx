@@ -29,6 +29,10 @@ export default async () => {
   });
 
   const socket = new IO({
+    reconnectionDelay: 500,
+    reconnectionDelayMax: 3000,
+    pingInterval: 1000,
+    pingTimeout: 2000,
     timeout: 1000,
   });
 

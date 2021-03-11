@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import cn from 'classnames';
@@ -15,6 +15,12 @@ const InputForm = () => {
   const nickname = useContext(UserNameContext);
   const dispatch = useDispatch();
   const inputRef = useRef();
+
+  const setInputFocus = () => {
+    if (inputRef.current) inputRef.current.focus();
+  };
+
+  useEffect(() => setInputFocus(), [currentChannelId]);
 
   const messageSchema = Yup.object().shape({
     body: Yup.string().trim()
@@ -47,7 +53,7 @@ const InputForm = () => {
     validationSchema: messageSchema,
     onSubmit: async (values, { resetForm }) => {
       await handleAddMessage(values.body, resetForm);
-      inputRef.current.focus();
+      setInputFocus();
     },
   });
 
