@@ -4,11 +4,12 @@ import axios from 'axios';
 import cn from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import UserNameContext from '../app-context';
+import { UserNameContext, I18nContext } from '../app-context';
 import { actions as networkActions } from '../store/network';
 import routes from '../routes';
 
-const InputForm = ({ i18next }) => {
+const InputForm = () => {
+  const i18next = useContext(I18nContext);
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);

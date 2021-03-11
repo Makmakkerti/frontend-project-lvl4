@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -6,12 +6,14 @@ import { useFormik } from 'formik';
 import {
   Button, Form,
 } from 'react-bootstrap';
+import { I18nContext } from '../../app-context';
 import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
 import routes from '../../routes';
 
-const Rename = ({ i18next }) => {
+const Rename = () => {
   const dispatch = useDispatch();
+  const i18next = useContext(I18nContext);
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channels = useSelector((state) => state.channels);
   const networkState = useSelector((state) => state.networkState);

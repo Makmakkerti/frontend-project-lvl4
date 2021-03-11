@@ -1,14 +1,15 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Dropdown, DropdownButton, Button, ButtonGroup,
 } from 'react-bootstrap';
 import cn from 'classnames';
+import { I18nContext } from '../app-context';
 import { openModal, setModalType } from '../store/modal';
 import { selectChannel } from '../store/currentChannel';
 
-const Channels = ({ i18next }) => {
+const Channels = () => {
+  const i18next = useContext(I18nContext);
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
   const currentChannelId = useSelector((state) => state.currentChannelId);

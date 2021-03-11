@@ -1,7 +1,9 @@
 import React from 'react';
 
-const UserNameContext = React.createContext({
+export const UserNameContext = React.createContext({
   username: 'anonymous',
 });
 
-export default UserNameContext;
+export const I18nContext = React.createContext({
+  i18next: null,
+});

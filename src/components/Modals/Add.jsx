@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -7,12 +7,14 @@ import {
   Button, Form,
 } from 'react-bootstrap';
 import ModalWrapper from './ModalWrapper';
+import { I18nContext } from '../../app-context';
 import { closeModal } from '../../store/modal';
 import { selectChannel } from '../../store/currentChannel';
 import routes from '../../routes';
 
-const Add = ({ i18next }) => {
+const Add = () => {
   const dispatch = useDispatch();
+  const i18next = useContext(I18nContext);
   const networkState = useSelector((state) => state.networkState);
   const channels = useSelector((state) => state.channels);
 

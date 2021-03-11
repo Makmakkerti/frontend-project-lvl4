@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
 import gon from 'gon';
+import { I18nContext } from './app-context';
 import en from './locales/en';
 import App from './components/App';
 import reducer from './store';
@@ -82,7 +83,9 @@ export default async () => {
 
   const Init = () => (
     <Provider store={store}>
-      <App i18next={i18nextInstance} />
+      <I18nContext.Provider value={i18nextInstance}>
+        <App i18next={i18nextInstance} />
+      </I18nContext.Provider>
     </Provider>
   );
 

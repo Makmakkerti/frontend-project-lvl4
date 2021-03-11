@@ -2,15 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import InputForm from './InputForm';
 
-const Messages = ({ i18next }) => {
+const Messages = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const channelMessages = useSelector((state) => state.messages
     .filter((m) => m.channelId === currentChannelId));
+  const lastMsg = [channelMessages[channelMessages.length - 1]];
   const chatContainer = React.createRef();
 
   const scrollToNewMessage = () => {
     const { current } = chatContainer;
     const diff = current.scrollHeight - current.clientHeight;
+    console.log('Scroll');
     if (diff > 0) {
       current.scrollTo(0, diff, 'smooth');
     }
@@ -18,7 +20,7 @@ const Messages = ({ i18next }) => {
 
   useEffect(() => {
     scrollToNewMessage();
-  });
+  }, lastMsg);
 
   return (
     <div className="col h-100">
@@ -34,7 +36,7 @@ const Messages = ({ i18next }) => {
           ))}
         </div>
         <div className="mt-auto">
-          <InputForm i18next={i18next} />
+          <InputForm />
         </div>
       </div>
     </div>

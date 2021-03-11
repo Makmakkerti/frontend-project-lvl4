@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ModalWrapper from './ModalWrapper';
+import { I18nContext } from '../../app-context';
 import { closeModal } from '../../store/modal';
 import { selectChannel } from '../../store/currentChannel';
 import routes from '../../routes';
 
-const Remove = ({ i18next }) => {
+const Remove = () => {
   const dispatch = useDispatch();
+  const i18next = useContext(I18nContext);
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const handleClose = () => dispatch(closeModal());
   const GeneralChannelId = 1;
