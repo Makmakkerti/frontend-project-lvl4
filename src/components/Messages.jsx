@@ -12,7 +12,6 @@ const Messages = () => {
   const scrollToNewMessage = () => {
     const { current } = chatContainer;
     const diff = current.scrollHeight - current.clientHeight;
-    console.log('Scroll');
     if (diff > 0) {
       current.scrollTo(0, diff, 'smooth');
     }

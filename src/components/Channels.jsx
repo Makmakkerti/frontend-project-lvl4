@@ -5,7 +5,7 @@ import {
 } from 'react-bootstrap';
 import cn from 'classnames';
 import { I18nContext } from '../app-context';
-import { openModal, setModalType } from '../store/modal';
+import { openModal } from '../store/modal';
 import { selectChannel } from '../store/currentChannel';
 
 const Channels = () => {
@@ -21,8 +21,7 @@ const Channels = () => {
 
   const handleModalType = (type) => (e) => {
     e.preventDefault();
-    dispatch(setModalType({ type }));
-    dispatch(openModal());
+    dispatch(openModal({ type }));
   };
 
   return (
