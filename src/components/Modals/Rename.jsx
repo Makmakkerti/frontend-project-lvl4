@@ -14,8 +14,7 @@ import routes from '../../routes';
 const Rename = () => {
   const dispatch = useDispatch();
   const i18next = useContext(I18nContext);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
-  const channels = useSelector((state) => state.channels);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
   const networkState = useSelector((state) => state.networkState);
 
   const channelNames = channels.map((ch) => ch.name);

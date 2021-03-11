@@ -10,7 +10,7 @@ import routes from '../routes';
 
 const InputForm = () => {
   const i18next = useContext(I18nContext);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const { currentChannelId } = useSelector((state) => state.channels);
   const networkState = useSelector((state) => state.networkState);
   const nickname = useContext(UserNameContext);
   const dispatch = useDispatch();

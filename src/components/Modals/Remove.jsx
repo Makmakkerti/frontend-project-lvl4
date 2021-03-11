@@ -4,13 +4,13 @@ import axios from 'axios';
 import ModalWrapper from './ModalWrapper';
 import { I18nContext } from '../../app-context';
 import { closeModal } from '../../store/modal';
-import { selectChannel } from '../../store/currentChannel';
+import { actions as channelActions } from '../../store/channels';
 import routes from '../../routes';
 
 const Remove = () => {
   const dispatch = useDispatch();
   const i18next = useContext(I18nContext);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const { currentChannelId } = useSelector((state) => state.channels);
   const handleClose = () => dispatch(closeModal());
   const GeneralChannelId = 1;
   const networkState = useSelector((state) => state.networkState);
@@ -18,7 +18,7 @@ const Remove = () => {
   const handleRemove = async () => {
     try {
       await axios.delete(routes.channelPath(currentChannelId));
-      dispatch(selectChannel({ currentChannelId: GeneralChannelId }));
+      dispatch(channelActions.selectChannel({ currentChannelId: GeneralChannelId }));
       dispatch(closeModal());
     } catch (error) {
       console.log(error);

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import InputForm from './InputForm';
 
 const Messages = () => {
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const { currentChannelId } = useSelector((state) => state.channels);
   const channelMessages = useSelector((state) => state.messages
     .filter((m) => m.channelId === currentChannelId));
   const lastMsg = [channelMessages[channelMessages.length - 1]];

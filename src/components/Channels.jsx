@@ -6,17 +6,16 @@ import {
 import cn from 'classnames';
 import { I18nContext } from '../app-context';
 import { openModal } from '../store/modal';
-import { selectChannel } from '../store/currentChannel';
+import { actions as channelActions } from '../store/channels';
 
 const Channels = () => {
   const i18next = useContext(I18nContext);
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
 
   const handleSwitchChannel = (id) => (e) => {
     e.preventDefault();
-    dispatch(selectChannel({ currentChannelId: id }));
+    dispatch(channelActions.selectChannel({ currentChannelId: id }));
   };
 
   const handleModalType = (type) => (e) => {

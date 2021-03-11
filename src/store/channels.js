@@ -1,18 +1,24 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'channels',
-  initialState: [],
+  initialState: { channels: [], currentChannelId: null },
   reducers: {
-    addChannel: (channels, action) => {
-      channels.push({
+    addChannel: (state, action) => {
+      state.channels.push({
         ...action.payload.attributes,
       });
     },
-    removeChannel: (channels, action) => channels.filter((c) => c.id !== action.payload.id),
-    renameChannel: (channels, { payload: { attributes } }) => {
-      const channel = channels.find((c) => (c.id === attributes.id));
+    removeChannel: (state, action) => {
+      state.channels = state.channels.filter((c) => c.id !== action.payload.id);
+    },
+    renameChannel: (state, { payload: { attributes } }) => {
+      const channel = state.channels.find((c) => (c.id === attributes.id));
       channel.name = attributes.name;
+    },
+    selectChannel: (state, { payload }) => {
+      state.currentChannelId = payload.currentChannelId;
     },
   },
 });

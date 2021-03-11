@@ -9,14 +9,14 @@ import {
 import ModalWrapper from './ModalWrapper';
 import { I18nContext } from '../../app-context';
 import { closeModal } from '../../store/modal';
-import { selectChannel } from '../../store/currentChannel';
+import { actions as channelActions } from '../../store/channels';
 import routes from '../../routes';
 
 const Add = () => {
   const dispatch = useDispatch();
   const i18next = useContext(I18nContext);
   const networkState = useSelector((state) => state.networkState);
-  const channels = useSelector((state) => state.channels);
+  const { channels } = useSelector((state) => state.channels);
 
   const handleClose = () => dispatch(closeModal());
   const channelNames = channels.map((ch) => ch.name);
@@ -52,7 +52,7 @@ const Add = () => {
       try {
         const { data } = await axios.post(routes.channelsPath(), messageData);
         dispatch(closeModal());
-        dispatch(selectChannel({ currentChannelId: data.data.attributes.id }));
+        dispatch(channelActions.selectChannel({ currentChannelId: data.data.attributes.id }));
       } catch (err) {
         console.log(err);
       }
