@@ -6,7 +6,6 @@ const Messages = () => {
   const { currentChannelId } = useSelector((state) => state.channels);
   const channelMessages = useSelector((state) => state.messages
     .filter((m) => m.channelId === currentChannelId));
-  const lastMsg = [channelMessages[channelMessages.length - 1]];
   const chatContainer = React.createRef();
 
   const scrollToNewMessage = () => {
@@ -19,7 +18,7 @@ const Messages = () => {
 
   useEffect(() => {
     scrollToNewMessage();
-  }, lastMsg);
+  }, [channelMessages.length]);
 
   return (
     <div className="col h-100">

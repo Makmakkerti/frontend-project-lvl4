@@ -9,5 +9,5 @@ const slice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setModalType } = slice.actions;
+export const { openModal, closeModal } = slice.actions;
 export default slice.reducer;

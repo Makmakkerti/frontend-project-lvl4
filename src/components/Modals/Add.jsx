@@ -10,6 +10,7 @@ import ModalWrapper from './ModalWrapper';
 import { I18nContext } from '../../app-context';
 import { closeModal } from '../../store/modal';
 import { actions as channelActions } from '../../store/channels';
+import { actions as networkActions } from '../../store/network';
 import routes from '../../routes';
 
 const Add = () => {
@@ -51,9 +52,11 @@ const Add = () => {
 
       try {
         const { data } = await axios.post(routes.channelsPath(), messageData);
+        if (networkState.error) dispatch(networkActions.setDefaults());
         dispatch(closeModal());
         dispatch(channelActions.selectChannel({ currentChannelId: data.data.attributes.id }));
       } catch (err) {
+        dispatch(networkActions.setError());
         console.log(err);
       }
     },
@@ -78,7 +81,7 @@ const Add = () => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit" disabled={networkState.error}>
+            <Button variant="primary" type="submit">
               {i18next.t('buttons.submit')}
             </Button>
           </div>

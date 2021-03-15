@@ -9,6 +9,7 @@ import {
 import { I18nContext } from '../../app-context';
 import ModalWrapper from './ModalWrapper';
 import { closeModal } from '../../store/modal';
+import { actions as networkActions } from '../../store/network';
 import routes from '../../routes';
 
 const Rename = () => {
@@ -50,8 +51,10 @@ const Rename = () => {
 
       try {
         await axios.patch(routes.channelPath(currentChannelId), messageData);
+        if (networkState.error) dispatch(networkActions.setDefaults());
         dispatch(closeModal());
       } catch (error) {
+        dispatch(networkActions.setError());
         console.log(error);
       }
     },
@@ -75,7 +78,7 @@ const Rename = () => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit" disabled={networkState.error}>
+            <Button variant="primary" type="submit">
               {i18next.t('buttons.submit')}
             </Button>
           </div>
