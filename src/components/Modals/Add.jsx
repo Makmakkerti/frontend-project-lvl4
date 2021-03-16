@@ -74,6 +74,7 @@ const Add = () => {
             value={formik.values.body}
             onChange={formik.handleChange}
             ref={inputRef}
+            disabled={formik.isSubmitting}
           />
           {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
 
@@ -81,7 +82,7 @@ const Add = () => {
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={formik.isSubmitting}>
               {i18next.t('buttons.submit')}
             </Button>
           </div>

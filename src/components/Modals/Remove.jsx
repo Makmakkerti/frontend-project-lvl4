@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-let */
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -18,12 +19,15 @@ const Remove = () => {
 
   const handleRemove = async () => {
     try {
+      dispatch(networkActions.setSending({ sending: true }));
       await axios.delete(routes.channelPath(currentChannelId));
       if (networkState.error) dispatch(networkActions.setDefaults());
       dispatch(channelActions.selectChannel({ currentChannelId: GeneralChannelId }));
       dispatch(closeModal());
+      dispatch(networkActions.setSending({ sending: false }));
     } catch (error) {
       dispatch(networkActions.setError());
+      dispatch(networkActions.setSending({ sending: false }));
       console.log(error);
     }
   };
@@ -34,7 +38,7 @@ const Remove = () => {
       {i18next.t('confirmQuestion')}
       <div className="d-flex justify-content-between">
         <button type="button" className="mr-2 btn btn-secondary" onClick={handleClose}>{i18next.t('buttons.cancel')}</button>
-        <button type="button" className="btn btn-danger" onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
+        <button type="button" className="btn btn-danger" disabled={networkState.sending} onClick={handleRemove}>{i18next.t('buttons.submit')}</button>
       </div>
     </ModalWrapper>
   );

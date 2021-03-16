@@ -72,13 +72,14 @@ const Rename = () => {
             value={formik.values.body}
             onChange={formik.handleChange}
             ref={modalInputRef}
+            disabled={formik.isSubmitting}
           />
           {formik.errors.body && <div className="d-block invalid-feedback">{formik.errors.body}</div>}
           <div className="d-flex justify-content-end">
             <Button variant="secondary" className="mr-2" onClick={handleClose}>
               {i18next.t('buttons.cancel')}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" disabled={formik.isSubmitting} type="submit">
               {i18next.t('buttons.submit')}
             </Button>
           </div>
