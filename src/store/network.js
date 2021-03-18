@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'network',
-  initialState: { error: null, sending: false },
+  initialState: { error: false, sending: false },
   reducers: {
     setError: () => ({ error: true }),
-    setDefaults: () => ({ error: null }),
+    setDefaults: () => ({ error: false }),
     setSending: (network, { payload }) => {
-      network.sending = payload.sending;
+      network.sending = payload;
     },
   },
 });

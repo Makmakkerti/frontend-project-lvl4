@@ -23,8 +23,6 @@ const Rename = () => {
   const modalInputRef = useRef();
   const handleClose = () => dispatch(closeModal());
 
-  // AutoFocus Modal Input
-  useEffect(() => modalInputRef.current.focus(), []);
   // AutoSelect Modal Input
   useEffect(() => modalInputRef.current.select(), []);
 

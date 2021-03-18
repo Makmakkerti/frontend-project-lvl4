@@ -9,7 +9,6 @@ import IO from 'socket.io-client';
 import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import { configureStore } from '@reduxjs/toolkit';
-import gon from 'gon';
 import { I18nContext } from './app-context';
 import en from './locales/en';
 import App from './components/App';
@@ -18,7 +17,7 @@ import { actions as messageActions } from './store/messages';
 import { actions as channelActions } from './store/channels';
 import { actions as networkActions } from './store/network';
 
-export default async () => {
+export default async (preloadedState) => {
   const i18nextInstance = i18next.createInstance();
   await i18nextInstance.init({
     lng: 'en',
@@ -35,15 +34,6 @@ export default async () => {
     timeout: 1000,
   });
 
-  const { channels, currentChannelId, messages } = gon;
-  const preloadedState = {
-    channels: {
-      channels,
-      currentChannelId,
-    },
-    messages,
-  };
-
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
   }
@@ -52,17 +42,6 @@ export default async () => {
     reducer,
     preloadedState,
   });
-
-  const updateOnlineStatus = () => {
-    if (navigator.onLine) {
-      store.dispatch(networkActions.setDefaults());
-    } else {
-      store.dispatch(networkActions.setError());
-    }
-  };
-
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
 
   socket.on('newMessage', (msg) => {
     store.dispatch(messageActions.addMessage({ attributes: msg.data.attributes }));

@@ -1,3 +1,13 @@
+import gon from 'gon';
 import runApp from './Init';
 
-runApp();
+const { channels, currentChannelId, messages } = gon;
+const preloadedState = {
+  channels: {
+    channels,
+    currentChannelId,
+  },
+  messages,
+};
+
+runApp(preloadedState);
